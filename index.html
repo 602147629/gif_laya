@@ -12,23 +12,51 @@
 <link rel="stylesheet" type="text/css" href="css/index.css">
 <style type="text/css">
 	.gifContainer{
-		width: 500px;
-		height: 300px;
+		width: 640px;
+		height: 1029px;
 		position: fixed;
-		top:50%;
-		left: 50%;
-		margin: -250px 0 0 -150px;
+		top:0;
+		left:0;
+		background: #333;
 	}
 </style>
 </head>
 <body>
 
-<div class="gifContainer">
-	
-</div>
+<div class="gifContainer"></div>
+<div class="wings"></div>
 
+<script src="js/widget/jquery.js"></script>
 <script src="js/widget/laya.core.min.js"></script>
 <script src="js/widget/laya.webgl.min.js"></script>
 <script src="js./gif.js"></script>
+<script>
+	/*
+	 * gifOn（path,num,option）:开启插件
+		 * 参数：
+		 * path:图片路径+名称,必填项
+		 * num:有几张连续JPG图,必填项
+		 * option.type:图片类型，默认png
+		 * option.repeat:重复次数，默认值0（无限循环）
+		 * option.opacity:背景是否透明，默认值false（不透明背景会调用WebGL模式，效率更高）
+		 * option.speed:每帧之间的间隔，默认100ms
+		 * option.onComplete：连续帧播放到最后一张时触发,会返回播放到第几次
+	 * 
+	 * gifOff（）：关闭插件,销毁对象(播放完毕后吗，再执行此方法)
+	 * 
+	 * 只适用全屏GIF
+	 * 
+	 * 一次只能存在一个gif动画，需要新的gif动画需要先把前面的gif动画关闭掉
+	 */
+	$(".gifContainer").gifOn("images/test/a",44,{type:"jpg",speed:100,opacity:false,repeat:3,full:true,onComplete:onComplete});
+
+	function onComplete(time){
+		console.log("onComplete:"+time);
+		if(time == 3){
+			$(".gifContainer").gifOff();
+			$(".gifContainer").gifOn("images/test2/b",32,{type:"jpg",speed:100,opacity:false,repeat:1,full:true});
+		}
+	}
+</script>
 </body>
 </html>
